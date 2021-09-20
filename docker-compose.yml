@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  user-mysql:
+    environment: 
+      - MYSQL_ROOT_PASSWORD=password
+      # - MYSQL_DATABASE=USER
+    image: mysql:5.7.20
+    ports:
+      - "7200:3306"
+  
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "7300:80"
+    volumes:
+      - ../phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php
