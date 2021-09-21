@@ -71,7 +71,7 @@ router.get(paths["userDatabase"], (req, res) => {
 // @Route - User Table
 router.get(paths["userTable"], (req, res) => {
   let query =
-    "CREATE TABLE IF NOT EXISTS user(email varchar(50) PRIMARY KEY, password VARCHAR(50), username varchar(20) NOT NULL, userType varchar(10) NOT NULL,  fullName varchar(50))";
+    "CREATE TABLE IF NOT EXISTS user(email varchar(50) PRIMARY KEY, password VARCHAR(100), username varchar(20) NOT NULL, userType varchar(20) NOT NULL,  fullName varchar(50))";
 
   db.query(query, (err, result) => {
     if (err) {
@@ -88,7 +88,7 @@ router.get(paths["userTable"], (req, res) => {
 // @Route - Developer User Table
 router.get(paths["developerTable"], (req, res) => {
   let query =
-    "CREATE TABLE IF NOT EXISTS developer(email varchar(50) PRIMARY KEY NOT NULL, college varchar(50), workingDetails varchar(50))";
+    "CREATE TABLE IF NOT EXISTS developer(email varchar(50) PRIMARY KEY NOT NULL, college varchar(50) NOT NULL, graduationYear INT NOT NULL)";
 
   db.query(query, (err, result) => {
     if (err) {
@@ -108,7 +108,7 @@ router.get(paths["developerTable"], (req, res) => {
 // @Route - Organization User Table
 router.get(paths["organizationTable"], (req, res) => {
   let query =
-    "CREATE TABLE IF NOT EXISTS organization(email varchar(50) PRIMARY KEY NOT NULL, contact varchar(50), address varchar(100))";
+    "CREATE TABLE IF NOT EXISTS organization(email varchar(50) PRIMARY KEY NOT NULL, contact INT, address varchar(100))";
 
   db.query(query, (err, result) => {
     if (err) {
