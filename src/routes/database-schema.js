@@ -20,12 +20,12 @@ const db = mysql.createConnection({
 });
 
 mysqlConn.connect((err) => {
-    // if (err) console.log("Error Connecting to MySQL");
+    if (err) console.log("Error Connecting to MySQL");
     console.log("Connected to MySQL...");
 });
 
 db.connect((err) => {
-    // if (err) console.log("Error Connecting to User Database");
+    if (err) console.log("Error Connecting to User Database");
     console.log("Connected to User Database...");
 });
 
@@ -48,8 +48,6 @@ let paths = {
   allTables: "/api/user/database/createAllTables",
 };
 
-// makeConnection();
-// makeDBConnection();
 
 // @Route - User Database
 router.get(paths["userDatabase"], (req, res) => {
@@ -58,7 +56,6 @@ router.get(paths["userDatabase"], (req, res) => {
   mysqlConn.query(query, (err, result) => {
     if (err) {
       console.log("Error Creating Database...");
-      // throw new Error("Error Creating Database...");
       return res.status(400).send({ message: "Error Creating User Database" });
     }
     console.log("Database Created Successfully!");
@@ -75,7 +72,6 @@ router.get(paths["userTable"], (req, res) => {
 
   db.query(query, (err, result) => {
     if (err) {
-      // throw new Error("Error Creating User Table");
       console.log("Error Creating User Table");
       return res.status(400).send({ message: "Error Creating User Table", error: err.message });
     }
@@ -92,7 +88,6 @@ router.get(paths["developerTable"], (req, res) => {
 
   db.query(query, (err, result) => {
     if (err) {
-      // throw new Error("Error Creating Developer-User Table");
       console.log("Error Creating Developer-User Table");
       return res
         .status(400)
@@ -112,7 +107,6 @@ router.get(paths["organizationTable"], (req, res) => {
 
   db.query(query, (err, result) => {
     if (err) {
-      // throw new Error("Error Creating Organization-User Table");
       console.log("Error Creating Organization-User Table");
       return res
         .status(400)

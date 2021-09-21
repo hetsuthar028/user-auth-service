@@ -1,10 +1,24 @@
+require('dotenv').config();
 const express = require('express');
 const dbObj = require('../utils/database-call');
 const bcrypt = require('bcrypt');
 const signInRouter = express.Router();
+const jwt = require('jsonwebtoken');
+const { body, validationResult } = require('express-validator');
+const verifyJWT = require('../middlewares/verifyToken');
+const jwtSecret = process.env.JWT_SECRET
 
 
-signInRouter.post('/api/user/signin', (req, res)=>{
+signInRouter.post('/api/user/signin',
+    [
+        body('email').isEmail()
+    ],
+    async (req, res)=>{
+        const expErrors =  validationResult(req);
+        if(!expErrors.isEmpty()){
+            return res.status(400).json({error: expErrors.array()});
+        }
+
     let {email, password} = req.body;
     let errors = [];
 
@@ -19,7 +33,7 @@ signInRouter.post('/api/user/signin', (req, res)=>{
     // Queries
     let userFetchQuery = `SELECT email, password FROM user where email='${email}'`;
 
-    dbObj.query(userFetchQuery, (err, results)=>{
+    await dbObj.query(userFetchQuery, (err, results)=>{
         if(err) return res.status(400).json({error: "Error fetching data"})
 
         if(!results.length){
@@ -36,10 +50,20 @@ signInRouter.post('/api/user/signin', (req, res)=>{
                 return res.status(400).json({error: "Invalid email or password"});
             }
 
-            return res.status(200).json({message: "success"});
+            // Generate an access token
+            const accessToken = jwt.sign(
+                {email: email},
+                jwtSecret,
+                {expiresIn: '10m'});
+        
+            res.header('authorization', accessToken).json({
+                error: null,
+                data: {accessToken}
+            });
+
+            // return res.status(200).json({message: "success"});
         })
     })
 });
-
 
 module.exports = signInRouter;
