@@ -76,7 +76,7 @@ router.get(paths["userTable"], (req, res) => {
       return res.status(400).send({ message: "Error Creating User Table", error: err.message });
     }
     console.log("User Table Created Successfully!");
-    return res.send({ message: "User Table Created Successfully!" });
+    return res.send({ message: "User Table Created Successfully!", result });
   });
 });
 

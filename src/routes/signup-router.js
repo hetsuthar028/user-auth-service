@@ -1,9 +1,11 @@
+require('dotenv').config();
 const express = require("express");
 const axios = require("axios");
 const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
 const dbObj = require("../utils/database-call");
 const signUpRouter = express.Router();
+const jwt = require('jsonwebtoken');
 
 // @Route - SignUp
 signUpRouter.post(
@@ -101,6 +103,17 @@ signUpRouter.post(
                                             return dbObj.rollback();
                                         }
                                         dbObj.commit();
+
+                                        const userJWT = jwt.sign({
+                                            email: email,
+                                            userType: userType,
+                                            username: username
+                                        }, process.env.JWT_SECRET);
+
+                                        req.session = {
+                                            jwt: userJWT
+                                        }
+
                                         return res
                                             .status(200)
                                             .json({ message: "success" });
@@ -122,6 +135,16 @@ signUpRouter.post(
                                             return dbObj.rollback();
                                         }
                                         dbObj.commit();
+
+                                        const userJWT = jwt.sign({
+                                            email: email,
+                                            userType: userType,
+                                            username: username
+                                        }, process.env.JWT_SECRET);
+
+                                        req.session = {
+                                            jwt: userJWT
+                                        }
                                         return res
                                             .status(200)
                                             .json({ message: "success" });

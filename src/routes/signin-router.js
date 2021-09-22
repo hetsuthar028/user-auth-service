@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 const signInRouter = express.Router();
 const jwt = require("jsonwebtoken");
 const { body, validationResult } = require("express-validator");
-const verifyJWT = require("../middlewares/verifyToken");
+const verifyJWT = require("../middlewares/verify-token");
 const jwtSecret = process.env.JWT_SECRET;
 
 signInRouter.post(
@@ -64,6 +64,11 @@ signInRouter.post(
                     jwtSecret,
                     { expiresIn: "10m" }
                 );
+                
+                // Storing session cookie
+                req.session = {
+                    jwt: accessToken
+                };
 
                 res.header("authorization", accessToken).json({
                     error: null,
