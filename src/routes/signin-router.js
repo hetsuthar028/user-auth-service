@@ -35,14 +35,14 @@ signInRouter.post(
             if (err)
                 return res.status(400).json({ error: "Error fetching data" });
 
-            let { email, storedPassword, username, userType, fullName } =
-                results[0];
+            
 
-            if (!results.length) {
+            if (!results.length || results == undefined) {
                 return res
                     .status(400)
                     .json({ message: "Invalid email or password" });
             }
+            let { email, storedPassword, username, userType, fullName } = results[0];
 
             bcrypt.compare(password, results[0].password, (err, response) => {
                 if (err) {
@@ -66,9 +66,9 @@ signInRouter.post(
                 );
                 
                 // Storing session cookie
-                req.session = {
-                    jwt: accessToken
-                };
+                // req.session = {
+                //     jwt: accessToken
+                // };
 
                 res.header("authorization", accessToken).json({
                     error: null,

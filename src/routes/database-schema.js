@@ -56,12 +56,12 @@ router.get(paths["userDatabase"], (req, res) => {
   mysqlConn.query(query, (err, result) => {
     if (err) {
       console.log("Error Creating Database...");
-      return res.status(400).send({ message: "Error Creating User Database" });
+      return res.status(400).send({ message: "Error Creating User Database", err });
     }
     console.log("Database Created Successfully!");
     return res.send({ message: "Database Created Successfully!" });
   });
-  mysqlConn.destroy();
+  // mysqlConn.destroy();
 });
 
 

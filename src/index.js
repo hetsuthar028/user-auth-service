@@ -6,6 +6,7 @@ const cookieParser = require("cookie-parser");
 require('express-async-errors');
 const verifyJWT = require("./middlewares/verify-token");
 const cookieSession = require('cookie-session');
+const cors = require('cors');
 
 const databaseSchemaRouter = require("./routes/database-schema");
 const errorHandler = require('./middlewares/error-handler');
@@ -18,6 +19,7 @@ const PORT = process.env.PORT || 4200;
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 // app.use(cookieParser());
 app.use(
     cookieSession({
