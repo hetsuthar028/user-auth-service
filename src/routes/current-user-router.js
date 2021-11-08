@@ -5,8 +5,9 @@ const jwt = require('jsonwebtoken');
 const currentUserMidd = require('../middlewares/current-user-middleware');
 
 currentUserRouter.get('/api/user/currentuser', currentUserMidd, (req, res)=>{
-    // console.log("Headers", req.headers)
-    res.send({currentUser: req.currentUser || '123' });
+    // console.log("Headers", req.currentUser)
+    console.log("Got Incoming Request", req.currentUser)
+    return res.send({currentUser: req.currentUser || null });
 });
 
 module.exports = currentUserRouter;

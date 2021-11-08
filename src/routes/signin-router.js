@@ -62,7 +62,7 @@ signInRouter.post(
                 const accessToken = jwt.sign(
                     { email: email, username: username, userType: userType },
                     jwtSecret,
-                    { expiresIn: "10m" }
+                    { expiresIn: "100m" }
                 );
                 
                 // Storing session cookie
