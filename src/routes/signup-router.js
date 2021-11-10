@@ -154,7 +154,7 @@ signUpRouter.post(
                                 );
                             } else if (userType == "organization") {
                                 // Query - Add Organization
-                                let organizationAddQuery = `INSERT INTO organization(email, contact, address) VALUES('${email}', ${req.body.contact}, '${req.body.address}')`;
+                                let organizationAddQuery = `INSERT INTO organization(email, contact, address) VALUES('${email}', '${req.body.contact}', '${req.body.address}')`;
 
                                 // Add to organization Table
                                 dbObj.query(

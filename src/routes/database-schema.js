@@ -46,6 +46,9 @@ let paths = {
   developerTable: "/api/user/database/createDevUserTable",
   organizationTable: "/api/user/database/createOrgUserTable",
   allTables: "/api/user/database/createAllTables",
+  dropDeveloperTable: "/api/user/database/dropDeveloperTable",
+  dropOrganizationTable: "/api/user/database/dropOrganizationTable",
+  dropUserTable: "/api/user/database/dropUserTable",
 };
 
 
@@ -84,11 +87,11 @@ router.get(paths["userTable"], (req, res) => {
 // @Route - Developer User Table
 router.get(paths["developerTable"], (req, res) => {
   let query =
-    "CREATE TABLE IF NOT EXISTS developer(email varchar(50) PRIMARY KEY NOT NULL, college varchar(50) NOT NULL, graduationYear INT NOT NULL)";
+    "CREATE TABLE IF NOT EXISTS developer(email varchar(50) PRIMARY KEY NOT NULL, college varchar(50) NOT NULL, graduationYear INT NOT NULL, FOREIGN KEY(email) REFERENCES user(email) ON UPDATE CASCADE ON DELETE CASCADE)";
 
   db.query(query, (err, result) => {
     if (err) {
-      console.log("Error Creating Developer-User Table");
+      console.log("Error Creating Developer-User Table", err);
       return res
         .status(400)
         .send({ message: "Error Creating Developer-User Tbale" });
@@ -103,7 +106,7 @@ router.get(paths["developerTable"], (req, res) => {
 // @Route - Organization User Table
 router.get(paths["organizationTable"], (req, res) => {
   let query =
-    "CREATE TABLE IF NOT EXISTS organization(email varchar(50) PRIMARY KEY NOT NULL, contact INT, address varchar(100))";
+    "CREATE TABLE IF NOT EXISTS organization(email varchar(50) PRIMARY KEY NOT NULL, contact varchar(10), address varchar(100), FOREIGN KEY(email) REFERENCES user(email) ON UPDATE CASCADE ON DELETE CASCADE)";
 
   db.query(query, (err, result) => {
     if (err) {
@@ -148,7 +151,7 @@ router.get('/api/user/database/dropDatabase', (req, res)=>{
 
 
 // @Route - Drop User Table
-router.get('/api/user/database/dropUserTable', (req, res)=>{
+router.get(`${paths["dropUserTable"]}`, (req, res)=>{
     let query = "DROP TABLE user";
     db.query(query, (err, result)=>{
         if(err){
@@ -161,8 +164,8 @@ router.get('/api/user/database/dropUserTable', (req, res)=>{
 })
 
 
-// @Route - Drop DevUser Table
-router.get('/api/user/database/dropDevUserTable', (req, res)=>{
+// @Route - Drop Developer Table
+router.get(`${paths["dropDeveloperTable"]}`, (req, res)=>{
     let query = "DROP TABLE developer";
     db.query(query, (err, result)=>{
         if(err){
@@ -175,8 +178,8 @@ router.get('/api/user/database/dropDevUserTable', (req, res)=>{
 })
 
 
-// @Route - Drop User Table
-router.get('/api/user/database/dropUserTable', (req, res)=>{
+// @Route - Drop Organization Table
+router.get(`${paths["dropOrganizationTable"]}`, (req, res)=>{
     let query = "DROP TABLE organization";
     db.query(query, (err, result)=>{
         if(err){
