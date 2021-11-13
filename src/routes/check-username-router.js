@@ -7,7 +7,7 @@ const checkUserNameRouter = express.Router();
 checkUserNameRouter.get('/api/user/get/username/:userName', (req, res) => {
     let userName = req.params.userName;
     if(userName.toString().length >= 8){
-        let checkUserNameQuery = `SELECT username, email FROM user WHERE username='${userName}'`;
+        let checkUserNameQuery = `SELECT * FROM user WHERE username='${userName}'`;
 
         dbObj.query(checkUserNameQuery, (err, data) => {
             if(err){
