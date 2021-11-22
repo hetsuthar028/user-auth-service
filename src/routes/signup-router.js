@@ -57,24 +57,6 @@ signUpRouter.post(
                 errors.push({ error: "Invalid fullName", field: "fullName" });
             }
 
-            // if(userType == "developer"){
-            //     if(!req.body.college){
-            //         errors.push({error: "Invalid college", field:"college"})
-            //     }
-            //     if(!req.body.graduationYear){
-            //         errors.push({error: "Invalid Graduation Year", field:"graduationYear"})
-            //     }
-            // }
-
-            // if(userType == "organization"){
-            //     if(!req.body.contact){
-            //         errors.push({error: "Invalid contact", field:"contact"})
-            //     }
-            //     if(!req.body.address){
-            //         errors.push({error: "Invalid address", field:"address"})
-            //     }
-            // }
-
             // Check for validation errors
             if (errors.length != 0) {
                 console.log("Errors at start");
