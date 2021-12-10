@@ -16,6 +16,9 @@ const signOutRouter = require("./routes/signout-router");
 const currentUserRouter = require('./routes/current-user-router');
 const getUserRouter = require('./routes/get-user-router');
 const checkUserNameRouter = require('./routes/check-username-router');
+const getDevUserRouter = require('./routes/get-dev-user-router');
+const getOrgUserRouter = require('./routes/get-org-user-router');
+
 const PORT = process.env.PORT || 4200;
 
 const app = express();
@@ -35,6 +38,8 @@ app.use(currentUserRouter);
 app.use(signOutRouter);
 app.use(getUserRouter);
 app.use(checkUserNameRouter);
+app.use(getDevUserRouter);
+app.use(getOrgUserRouter);
 
 app.use(errorHandler);
 

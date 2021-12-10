@@ -35,14 +35,13 @@ signInRouter.post(
             if (err)
                 return res.status(400).json({ error: "Error fetching data" });
 
-            
-
             if (!results.length || results == undefined) {
                 return res
                     .status(400)
                     .json({ message: "Invalid email or password" });
             }
-            let { email, storedPassword, username, userType, fullName } = results[0];
+            let { email, storedPassword, username, userType, fullName } =
+                results[0];
 
             bcrypt.compare(password, results[0].password, (err, response) => {
                 if (err) {
@@ -64,7 +63,7 @@ signInRouter.post(
                     jwtSecret,
                     { expiresIn: "100m" }
                 );
-                
+
                 // Storing session cookie
                 // req.session = {
                 //     jwt: accessToken
