@@ -59,7 +59,7 @@ signInRouter.post(
 
                 // Generate an access token
                 const accessToken = jwt.sign(
-                    { email: email, username: username, userType: userType },
+                    { email: email, username: username, userType: userType, fullName: fullName },
                     jwtSecret,
                     { expiresIn: "100m" }
                 );
